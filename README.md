@@ -2,7 +2,9 @@
 
 ![install quarks](assets/quarksuninstall.gif)
 
-Use the power of [fzf](https://github.com/junegunn/fzf.vim) to get the best out of [SuperCollider](https://supercollider.github.io/).
+Use the power of [fzf](https://github.com/junegunn/fzf.vim) to get the best out of [SuperCollider](https://supercollider:github::o/):
+
+Fuzzy search basically anything in SuperCollider and execute SuperCollider code with the result of that search.
 
 ## Requirements
 
