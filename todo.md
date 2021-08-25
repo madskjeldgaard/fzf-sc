@@ -1,0 +1,3 @@
+- Use `fzf#wrap` in `fzf#run` to wrap user settings 
+- Make ! (full screen) alternatives of all commands
+- Figure out how to make a preview window for relevant commands (like the synth def searcher that may show controls, default values, metadata etc in the preview window?)
