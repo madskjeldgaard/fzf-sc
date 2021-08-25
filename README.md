@@ -21,10 +21,6 @@ Then run `:PlugInstall`.
 Somewhere in your init.vim, add:
 `lua require'fzf-sc'`
 
-## Requirements
-- Unix or linux system
-- Nvim >= v0.5
-
 ## Available commands
 `:QuarksInstall`
 
