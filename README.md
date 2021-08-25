@@ -6,6 +6,7 @@ Use the power of [fzf](https://github.com/junegunn/fzf.vim) to get the best out 
 
 - [fzf.vim](https://github.com/junegunn/fzf.vim)
 - [scnvim](https://github.com/davidgranstrom/scnvim)
+- Nvim >= v0.5
 
 ## Installation
 
