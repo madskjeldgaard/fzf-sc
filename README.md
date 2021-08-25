@@ -1,6 +1,6 @@
 # fzf-sc
 
-![install quarks](assets/quarksinstall.gif)
+![install quarks](assets/quarksuninstall.gif)
 
 Use the power of [fzf](https://github.com/junegunn/fzf.vim) to get the best out of [SuperCollider](https://supercollider.github.io/).
 
