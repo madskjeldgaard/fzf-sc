@@ -1,6 +1,30 @@
 # fzf-sc
 
-## Commands
+Use the power of [fzf](https://github.com/junegunn/fzf.vim) to get the best out of [SuperCollider](https://supercollider.github.io/).
+
+## Requirements
+
+- [fzf.vim](https://github.com/junegunn/fzf.vim)
+- [scnvim](https://github.com/davidgranstrom/scnvim)
+
+## Installation
+
+For vim-plug users, add this to your init.vim:
+
+`Plug 'madskjeldgaard/fzf-sc'`
+
+Then run `:PlugInstall`.
+
+## Setup
+
+Somewhere in your init.vim, add:
+`lua require'fzf-sc'`
+
+## Requirements
+- Unix or linux system
+- Nvim >= v0.5
+
+## Available commands
 `:QuarksInstall`
 
 Fetch quarks directory and install selected
