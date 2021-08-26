@@ -98,7 +98,7 @@ function M.fzf_sc_scales()
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
-reg_command("Scales lua require'fzf-sc'.fzf_sc_scales()")
+reg_command("Scale lua require'fzf-sc'.fzf_sc_scales()")
 
 -- Help files: Classes
 -- Too big for osc
