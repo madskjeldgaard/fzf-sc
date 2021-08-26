@@ -5,7 +5,7 @@ local M = {}
 -- Commands
 -- ------------------------------------
 
-function reg_command(str)
+local function reg_command(str)
 	vim.cmd("command! " .. str)
 end
 
@@ -40,16 +40,16 @@ reg_command("SCPlaySynth lua require'fzf-sc'.fzf_sc_play_synthdef()")
 
 -- Nodeproxy
 function M.fzf_sc_stop_nodeproxy()
-	local sc_code = [[Ndef.all['localhost'].monitors.asArray]];
-	local supercollider_return_code = "%s.stop;";
+local sc_code = [[Ndef.all['localhost'].monitors.asArray]];
+local supercollider_return_code = "%s.stop;";
 
-	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
 reg_command("NodeProxyStop lua require'fzf-sc'.fzf_sc_stop_nodeproxy()")
 
 function M.fzf_sc_play_nodeproxy()
-	local sc_code = [[Ndef.all['localhost'].existingProxies.asArray]];
+local sc_code = [[Ndef.all['localhost'].existingProxies.asArray]];
 	local supercollider_return_code = "Ndef(\'%s\').play;";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
@@ -95,5 +95,16 @@ function M.fzf_sc_scales()
 end
 
 reg_command("Scales lua require'fzf-sc'.fzf_sc_scales()")
+
+-- Help files: Classes
+-- Too big for osc
+-- function M.fzf_sc_help_ext()
+-- 	local sc_code = [[SCDoc.documents.collect{|doc, key| doc.title}]];
+-- 	local supercollider_return_code = "HelpBrowser.openHelpFor(\"%s\")";
+
+-- 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+-- end
+
+-- reg_command("SCHelp lua require'fzf-sc'.fzf_sc_help_ext()")
 
 return M
