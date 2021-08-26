@@ -25,7 +25,7 @@ reg_command("QuarksInstall lua require'fzf-sc'.fzf_sc_quark_install()")
 
 function M.fzf_sc_quark_uninstall()
 	local sc_code = [[Quarks.installed.collect{|q| q.name}]];
-	local supercollider_return_code = "Quarks.install(\"%s\");";
+	local supercollider_return_code = "Quarks.uninstall(\"%s\");";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
