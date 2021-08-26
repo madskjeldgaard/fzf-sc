@@ -1,4 +1,5 @@
 local utils = require"fzf-sc/utils"
+
 local M = {}
 
 -- ------------------------------------
@@ -8,6 +9,9 @@ local M = {}
 local function reg_command(str)
 	vim.cmd("command! " .. str)
 end
+
+-- Help tags search
+reg_command("SCHelp lua require'fzf-sc/help'.fzf_sc_help()")
 
 -- Quarks
 function M.fzf_sc_quark_install()
