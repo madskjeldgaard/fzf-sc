@@ -67,4 +67,45 @@ function M.fzf_sc_eval(sc_code, callback_sc_code)
 	)
 end
 
+function scnvim_unpack_tags_table()
+	local root = require'scnvim.utils'.get_scnvim_root_dir()
+	local classes = root .. "/scnvim-data/tags"
+	local tagsfile = io.open(classes)
+	local help = {}
+
+	for line in tagsfile:lines() do
+		local tagname, tagpath, _, _= line:match("%s*(.-)\t%s*(.-)\t%s*(.-)\t%s*(.-)")
+		help[tostring(tagname)] = tagpath
+		-- print(tagname)
+	end
+
+	return help
+end
+
+function M.definitions()
+	local help = scnvim_unpack_tags_table()
+	local help_keys = {};
+
+	for k,_ in pairs(help) do
+		table.insert(help_keys, k)
+	end
+
+	local lookup_func = function(class_name)
+		local key = tostring(class_name)
+		local lookup_path = help[key]
+		vim.cmd("spl " .. lookup_path)
+	end
+
+	if require'fzf-sc'.search_plugin == "nvim-fzf" then
+		coroutine.wrap(function()
+			local result = require'fzf'.fzf(help_keys);
+			if result then
+				lookup_func(result[1])
+			end;
+		end)();
+	else
+		error("fzf-sc: Only supported for nvim-fzf")
+	end
+end
+
 return M

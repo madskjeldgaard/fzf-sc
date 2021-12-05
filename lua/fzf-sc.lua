@@ -107,6 +107,7 @@ function M.setup(user_settings)
 	reg_command("PdefStop lua require'fzf-sc'.fzf_sc_stop_pdef()")
 	reg_command("CurrentEnvironment lua require'fzf-sc'.fzf_sc_current_environment()")
 	reg_command("Scale lua require'fzf-sc'.fzf_sc_scales()")
+	reg_command("SCDefinitions lua require'fzf-sc.utils'.definitions()")
 
 end
 
