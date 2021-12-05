@@ -29,7 +29,6 @@ use {
 }
 ```
 
-
 ### vim-plug
 For vim-plug users, add this to your init.vim:
 
