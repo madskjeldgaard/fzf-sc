@@ -37,15 +37,14 @@ Then run `:PlugInstall`.
 
 ## Setup
 
-Somewhere in your config file for neovim, add:
-`lua require'fzf-sc'.setup()`
+Somewhere in your config file for neovim, add `lua require'fzf-sc'.setup()` if you're using `init.vim` or `require'fzf-sc'.setup()` for init.lua.
 
 ### Configuration
 
-fzf-sc may be configured by supplying a table to the setup function
+fzf-sc may be configured by supplying a table to the setup function in a lua file:
 
 ```lua
-lua require'fzf-sc'.setup({
+require'fzf-sc'.setup({
 	-- Set to "nvim-fzf" if you have that plugin installed
 	search_plugin = "fzf.vim" 
 })
