@@ -10,9 +10,6 @@ local function reg_command(str)
 	vim.cmd("command! " .. str)
 end
 
--- Help tags search
-reg_command("SCHelp lua require'fzf-sc/help'.fzf_sc_help()")
-
 -- Quarks
 function M.fzf_sc_quark_install()
 	local sc_code = [[Quarks.fetchDirectory; Quarks.all.collect{|q| q.name}]];
@@ -21,16 +18,12 @@ function M.fzf_sc_quark_install()
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
-reg_command("QuarksInstall lua require'fzf-sc'.fzf_sc_quark_install()")
-
 function M.fzf_sc_quark_uninstall()
 	local sc_code = [[Quarks.installed.collect{|q| q.name}]];
 	local supercollider_return_code = "Quarks.uninstall(\"%s\");";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
-
-reg_command("QuarksUninstall lua require'fzf-sc'.fzf_sc_quark_uninstall()")
 
 -- SynthDefs
 function M.fzf_sc_play_synthdef()
@@ -40,8 +33,6 @@ function M.fzf_sc_play_synthdef()
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
-reg_command("SCPlaySynth lua require'fzf-sc'.fzf_sc_play_synthdef()")
-
 -- Nodeproxy
 function M.fzf_sc_stop_nodeproxy()
 local sc_code = [[Ndef.all['localhost'].monitors.asArray]];
@@ -50,16 +41,12 @@ local supercollider_return_code = "%s.stop;";
 utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
-reg_command("NodeProxyStop lua require'fzf-sc'.fzf_sc_stop_nodeproxy()")
-
 function M.fzf_sc_play_nodeproxy()
 local sc_code = [[Ndef.all['localhost'].existingProxies.asArray]];
 	local supercollider_return_code = "Ndef(\'%s\').play;";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
-
-reg_command("NodeProxyPlay lua require'fzf-sc'.fzf_sc_play_nodeproxy()")
 
 -- Pdef
 function M.fzf_sc_play_pdef()
@@ -69,16 +56,12 @@ function M.fzf_sc_play_pdef()
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
-reg_command("PdefPlay lua require'fzf-sc'.fzf_sc_play_pdef()")
-
 function M.fzf_sc_stop_pdef()
 	local sc_code = [[Pdef.all.keys.asArray.select{|k| Pdef(k).isPlaying};]];
 	local supercollider_return_code = "Pdef(\'%s\').stop;";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
-
-reg_command("PdefStop lua require'fzf-sc'.fzf_sc_stop_pdef()")
 
 -- Introspect environment
 function M.fzf_sc_current_environment()
@@ -88,8 +71,6 @@ function M.fzf_sc_current_environment()
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
-reg_command("CurrentEnvironment lua require'fzf-sc'.fzf_sc_current_environment()")
-
 -- Introspect scales
 function M.fzf_sc_scales()
 	local sc_code = [[Scale.names;]];
@@ -97,8 +78,6 @@ function M.fzf_sc_scales()
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
-
-reg_command("Scale lua require'fzf-sc'.fzf_sc_scales()")
 
 -- Help files: Classes
 -- Too big for osc
@@ -110,5 +89,25 @@ reg_command("Scale lua require'fzf-sc'.fzf_sc_scales()")
 -- end
 
 -- reg_command("SCHelp lua require'fzf-sc'.fzf_sc_help_ext()")
+
+function M.setup(user_settings)
+
+	local settings = user_settings or {}
+
+	M.search_plugin = settings.search_plugin or "fzf.vim"
+
+	-- Register commands
+	reg_command("SCHelp lua require'fzf-sc/help'.fzf_sc_help()")
+	reg_command("QuarksInstall lua require'fzf-sc'.fzf_sc_quark_install()")
+	reg_command("QuarksUninstall lua require'fzf-sc'.fzf_sc_quark_uninstall()")
+	reg_command("SCPlaySynth lua require'fzf-sc'.fzf_sc_play_synthdef()")
+	reg_command("NodeProxyStop lua require'fzf-sc'.fzf_sc_stop_nodeproxy()")
+	reg_command("NodeProxyPlay lua require'fzf-sc'.fzf_sc_play_nodeproxy()")
+	reg_command("PdefPlay lua require'fzf-sc'.fzf_sc_play_pdef()")
+	reg_command("PdefStop lua require'fzf-sc'.fzf_sc_stop_pdef()")
+	reg_command("CurrentEnvironment lua require'fzf-sc'.fzf_sc_current_environment()")
+	reg_command("Scale lua require'fzf-sc'.fzf_sc_scales()")
+
+end
 
 return M

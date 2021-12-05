@@ -2,18 +2,35 @@
 
 ![QuarksInstall](assets/quarksinstall.gif)
 
-Use the power of [fzf](https://github.com/junegunn/fzf.vim) to get the best out of [SuperCollider](https://supercollider:github::o/):
+Use the power of [fzf](https://github.com/junegunn/fzf) to get the best out of [SuperCollider](https://supercollider:github::o/):
 
 Fuzzy search basically anything in SuperCollider and execute SuperCollider code with the result of that search.
 
 ## Requirements
 
-- [fzf.vim](https://github.com/junegunn/fzf.vim)
+- [nvim-fzf](https://github.com/vijaymarupudi/nvim-fzf)(recommended) or [fzf.vim](https://github.com/junegunn/fzf.vim)
 - [scnvim](https://github.com/davidgranstrom/scnvim)
 - Nvim >= v0.5
 
 ## Installation
 
+### packer.nvim
+```lua
+use {
+	'madskjeldgaard/fzf-sc',
+	branch = 'develop',
+	config = function()
+		require'fzf-sc'.setup({ search_plugin = "nvim-fzf", })
+	end,
+	requires = {
+		'vijaymarupudi/nvim-fzf',
+		'davidgranstrom/scnvim'
+	}
+}
+```
+
+
+### vim-plug
 For vim-plug users, add this to your init.vim:
 
 `Plug 'madskjeldgaard/fzf-sc'`
@@ -22,8 +39,19 @@ Then run `:PlugInstall`.
 
 ## Setup
 
-Somewhere in your init.vim, add:
-`lua require'fzf-sc'`
+Somewhere in your config file for neovim, add:
+`lua require'fzf-sc'.setup()`
+
+### Configuration
+
+fzf-sc may be configured by supplying a table to the setup function
+
+```lua
+lua require'fzf-sc'.setup({
+	-- Set to "nvim-fzf" if you have that plugin installed
+	search_plugin = "fzf.vim" 
+})
+```
 
 ## Available commands
 `:SCHelp`
