@@ -39,6 +39,21 @@ local sc_code = [[Ndef.all['localhost'].existingProxies.asArray]];
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
+function M.clear_ndef()
+	local sc_code = [[Ndef.all['localhost'].existingProxies.asArray]];
+	local supercollider_return_code = "Ndef(\'%s\').clear(1);";
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
+-- Pdef
+function M.ndef_gui()
+	local sc_code = [[Ndef.all['localhost'].existingProxies.asArray]];
+	local supercollider_return_code = "Ndef(\'%s\').gui();";
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
 -- Pdef
 function M.play_pdef()
 	local sc_code = [[Pdef.all.keys]];
@@ -50,6 +65,13 @@ end
 function M.stop_pdef()
 	local sc_code = [[Pdef.all.keys.asArray.select{|k| Pdef(k).isPlaying};]];
 	local supercollider_return_code = "Pdef(\'%s\').stop;";
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
+function M.clear_pdef()
+	local sc_code = [[Pdef.all.keys]];
+	local supercollider_return_code = "Pdef(\'%s\').clear;";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
