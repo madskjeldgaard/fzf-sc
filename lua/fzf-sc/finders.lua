@@ -26,14 +26,14 @@ end
 
 -- Nodeproxy
 function M.stop_nodeproxy()
-local sc_code = [[Ndef.all['localhost'].monitors.asArray]];
+	local sc_code = [[Ndef.all['localhost'].monitors.asArray]];
 local supercollider_return_code = "%s.stop;";
 
-	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
 function M.play_nodeproxy()
-local sc_code = [[Ndef.all['localhost'].existingProxies.asArray]];
+	local sc_code = [[Ndef.all['localhost'].existingProxies.asArray]];
 	local supercollider_return_code = "Ndef(\'%s\').play;";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
