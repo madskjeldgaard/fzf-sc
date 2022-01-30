@@ -55,7 +55,13 @@ require'fzf-sc'.setup({
 
 Fuzzy search the fuzzy finders. Gets list of all fuzzy search commands. Choose one and execute it.
 
-To see the rest, type `:FzfSC ` on the command line and hit `tab` to autocomplete the available commands.
+To see the rest, type `:FzfSC<tab>` on the command line to autocomplete the available commands.
+
+Invoking the commands directly works like this. An example using the `scales` finder:
+
+```bash
+:FzfSC scales
+```
 
 ## Make your own fuzzy finder
 
