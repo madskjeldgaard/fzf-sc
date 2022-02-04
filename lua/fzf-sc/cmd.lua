@@ -1,7 +1,7 @@
 local M = {}
 local finders = require"fzf-sc/finders"
 
--- TODO: This will fuzzy over all available commands
+-- This will fuzzy over all available commands
 function M.fuzzy_commands()
 	if require'fzf-sc'.search_plugin == "nvim-fzf" then
 		coroutine.wrap(function()
