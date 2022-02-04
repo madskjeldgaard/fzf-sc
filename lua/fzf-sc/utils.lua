@@ -3,6 +3,20 @@ local M = {}
 -- ------------------------------------
 -- Utilities
 -- ------------------------------------
+
+-- @FIXME Only works for initial boot
+M.booted = false;
+function M.serverHasBooted()
+	require"scnvim".eval("s.hasBooted", function(result)
+		if result then
+			M.booted = result
+		end
+	end)
+
+	return M.booted
+
+end
+
 function M.rm_whitespace(instring)
 	return string.gsub(instring, "%s", "");
 end
@@ -49,7 +63,7 @@ function M.fzf_sc_eval(sc_code, callback_sc_code)
 			-- If using nvim-fzf
 			if require'fzf-sc'.search_plugin == "nvim-fzf" then
 				coroutine.wrap(function()
-					local result = require'fzf'.fzf(scReturnVal);
+					local result = require'fzf'.fzf(scReturnVal, "", require"fzf-sc".options);
 					if result then
 						-- print(result[1])
 						sinkFunction(result[1])

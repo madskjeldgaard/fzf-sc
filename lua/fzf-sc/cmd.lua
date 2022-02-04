@@ -5,7 +5,7 @@ local finders = require"fzf-sc/finders"
 function M.fuzzy_commands()
 	if require'fzf-sc'.search_plugin == "nvim-fzf" then
 		coroutine.wrap(function()
-			local result = require'fzf'.fzf(M.get_command_names());
+			local result = require'fzf'.fzf(M.get_command_names(), "", require"fzf-sc".options);
 			if result then
 				M.load_command(result[1])
 				-- sinkFunction(result[1])

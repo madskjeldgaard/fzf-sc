@@ -15,11 +15,23 @@ Fuzzy search basically anything in SuperCollider and execute SuperCollider code 
 ## Installation
 
 ### packer.nvim
+
 ```lua
 use {
 	'madskjeldgaard/fzf-sc',
 	config = function()
-		require'fzf-sc'.setup({ search_plugin = "nvim-fzf", })
+		require'fzf-sc'.setup({ 
+			search_plugin = "nvim-fzf", 
+			options = {
+				height = 50,
+				width = 33,
+				-- row = 4,
+				-- col = 4,
+				relative = 'editor',
+				border = false,
+				fzf_binary = "fzf" -- Or "skim"
+			}
+		})
 	end,
 	requires = {
 		'vijaymarupudi/nvim-fzf',

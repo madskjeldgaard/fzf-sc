@@ -8,6 +8,24 @@ function M.setup(user_settings)
 
 	M.search_plugin = settings.search_plugin or "fzf.vim"
 
+	local default_options = {
+		height = 50,
+		width = 50,
+		-- row = 4,
+		-- col = 4,
+		relative = 'editor',
+		border = false,
+		fzf_binary = "fzf"
+	}
+
+	M.options = settings.options or {}
+	for opt_name,v in pairs(default_options) do
+		M.options[opt_name] = M.options[opt_name] or v
+		-- print(settings.options[opt_name])
+		-- print(opt_name,M.options[opt_name])
+		-- print(opt_name,v)
+	end
+
 	-- TODO
 	-- Add user defined finders
 	-- if settings.custom_finders ~= nil then
@@ -26,7 +44,7 @@ function s:fzfsc_complete(arg,line,pos)
     return join(sort(commands), "\n")
 endfunction
 
-command! -nargs=* -complete=custom,s:fzfsc_complete FzfSC lua require('fzf-sc.cmd').load_command(<f-args>)
+command! -nargs=? -complete=custom,s:fzfsc_complete FzfSC lua require('fzf-sc.cmd').load_command(<f-args>)
 ]]
 end
 
