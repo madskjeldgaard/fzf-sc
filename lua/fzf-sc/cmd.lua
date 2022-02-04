@@ -11,6 +11,9 @@ function M.fuzzy_commands()
 				-- sinkFunction(result[1])
 			end;
 		end)();
+
+	  vim.cmd[[startinsert]]
+
 		-- If using fzf.vim
 	elseif require'fzf-sc'.search_plugin == "fzf.vim" then
 		-- TODO: Not tested
