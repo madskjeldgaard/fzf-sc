@@ -202,6 +202,42 @@ function M.fix_oscdef()
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
+-- Server stuff
+function M.setvolume_localserver()
+	local sc_code = [[ (0..(-120)); ]];
+	local supercollider_return_code = "Server.local.volume = %s;";
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
+function M.setmute_localserver()
+	local sc_code = [[ if(Server.local.volume.isMuted, { ['unmute'] }, {['mute']});]];
+	local supercollider_return_code = "Server.local.%s();";
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
+function M.control_localserver()
+	local sc_code = [[ ['boot', 'reboot', 'quit', 'freeAll', 'queryAllNodes'];]];
+	local supercollider_return_code = "Server.local.%s();";
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
+function M.control_allservers()
+	local sc_code = [[ ['quitAll', 'killAll', 'freeAll', 'hardFreeAll'];]];
+	local supercollider_return_code = "Server.%s();";
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
+function M.switch_localserver()
+	local sc_code = [[ ['scsynth', 'supernova'];]];
+	local supercollider_return_code = "Server.local.%s();";
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
 function M.help()
 	require'fzf-sc/help'.fzf_sc_help()
 end
