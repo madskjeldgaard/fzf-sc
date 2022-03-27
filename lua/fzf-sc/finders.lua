@@ -137,8 +137,8 @@ function M.current_environment()
 end
 
 -- Introspect scales
-function M.scales()
-	local sc_code = [[Scale.names;]];
+function M.play_scales()
+	local sc_code = [[Scale.names.sort;]];
 	local supercollider_return_code = "~fzf_scale=\\%s;Pbind(\\scale, Scale.at(~fzf_scale), \\degree, Pseq((0..Scale.at(~fzf_scale).degrees.size-1),1), \\dur, 0.25).play;Scale.at(~fzf_scale).postln;";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
