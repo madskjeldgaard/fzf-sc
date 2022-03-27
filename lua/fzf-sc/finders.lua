@@ -24,6 +24,59 @@ function M.play_synthdef()
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
+function M.postinfo_synthdescs()
+
+	local sc_code = [[SynthDescLib.global.synthDescs.keys.asArray;]];
+
+	local supercollider_return_code = [[
+{
+var synthName = "%s";
+var synthDesc = SynthDescLib.global.synthDescs.at(synthName.asSymbol);
+var controlNames = synthDesc.controls;
+
+var outString = "";
+controlNames.do{|ctrl, index|
+	var name = ctrl.name;
+	var default = ctrl.defaultValue;
+	var break = if(index != (controlNames.size - 1), { "\n" }, { "" });
+
+	outString = outString ++ "\\" ++ name ++ "," ++ default ++ ",\n";
+};
+
+("------------\n
+These are the arguments for SynthDef: " ++ synthName.asString ++ "\n\n").postln;
+outString.postln;
+}.value();
+]]
+
+utils.fzf_sc_eval(sc_code, supercollider_return_code)
+
+end
+
+function M.postinfo_controlspecs()
+	local sc_code = [[ Spec.specs.keys.asArray ]];
+
+	local returncode = [[
+	{
+	var specIndex = '%s';
+	var outString = "-----------";
+	var spec = ControlSpec.specs[specIndex];
+
+	outString = outString ++ "ControlSpec " ++ specIndex ++ ":\n";
+	outString = outString ++ "default: " ++ spec.default ++ "\n";
+	outString = outString ++ "min: " ++ spec.minval ++ "\n";
+	outString = outString ++ "max: " ++ spec.maxval ++ "\n";
+	outString = outString ++ "step: " ++ spec.step ++ "\n";
+	outString = outString ++ "warp: " ++ spec.warp ++ "\n";
+	outString = outString ++ "units: " ++ spec.units ++ "\n";
+
+	outString.postln;
+	}.value();
+	]]
+
+	require"fzf-sc/finders".controlspecs = function() require"fzf-sc/utils".fzf_sc_eval(sc_code, returncode) end
+end
+
 -- Nodeproxy
 function M.stop_nodeproxy()
 	local sc_code = [[Ndef.all['localhost'].monitors.asArray]];
@@ -46,7 +99,6 @@ function M.clear_ndef()
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
--- Pdef
 function M.ndef_gui()
 	local sc_code = [[Ndef.all['localhost'].existingProxies.asArray]];
 	local supercollider_return_code = "Ndef(\'%s\').gui();";
@@ -88,6 +140,64 @@ end
 function M.scales()
 	local sc_code = [[Scale.names;]];
 	local supercollider_return_code = "~fzf_scale=\\%s;Pbind(\\scale, Scale.at(~fzf_scale), \\degree, Pseq((0..Scale.at(~fzf_scale).degrees.size-1),1), \\dur, 0.25).play;Scale.at(~fzf_scale).postln;";
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
+-- MidiDef
+function M.free_mididef()
+	local sc_code = [[MIDIdef.all.keys.asArray]];
+	local supercollider_return_code = "MIDIdef(\'%s\').free();";
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
+function M.disable_mididef()
+	local sc_code = [[MIDIdef.all.keys.asArray]];
+	local supercollider_return_code = "MIDIdef(\'%s\').disable();";
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
+function M.enable_mididef()
+	local sc_code = [[MIDIdef.all.keys.asArray]];
+	local supercollider_return_code = "MIDIdef(\'%s\').enable();";
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
+function M.fix_mididef()
+	local sc_code = [[MIDIdef.all.keys.asArray]];
+	local supercollider_return_code = "MIDIdef(\'%s\').fix();";
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
+-- OSCdef
+function M.free_oscdef()
+	local sc_code = [[OSCdef.all.keys.asArray]];
+	local supercollider_return_code = "OSCdef(\'%s\').free();";
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
+function M.disable_oscdef()
+	local sc_code = [[OSCdef.all.keys.asArray]];
+	local supercollider_return_code = "OSCdef(\'%s\').disable();";
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
+function M.enable_oscdef()
+	local sc_code = [[OSCdef.all.keys.asArray]];
+	local supercollider_return_code = "OSCdef(\'%s\').enable();";
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
+function M.fix_oscdef()
+	local sc_code = [[MIDIdef.all.keys.asArray]];
+	local supercollider_return_code = "MIDIdef(\'%s\').fix();";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
