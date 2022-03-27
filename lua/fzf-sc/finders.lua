@@ -3,14 +3,14 @@ local M = {}
 
 -- Quarks
 function M.install_quark()
-	local sc_code = [[Quarks.fetchDirectory; Quarks.all.collect{|q| q.name}]];
+	local sc_code = [[Quarks.fetchDirectory; Quarks.all.collect{|q| q.name}.sort]];
 	local supercollider_return_code = "Quarks.install(\"%s\");";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
 function M.uninstall_quark()
-	local sc_code = [[Quarks.installed.collect{|q| q.name}]];
+	local sc_code = [[Quarks.installed.collect{|q| q.name}.sort]];
 	local supercollider_return_code = "Quarks.uninstall(\"%s\");";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
@@ -18,7 +18,7 @@ end
 
 -- SynthDefs
 function M.play_synthdef()
-	local sc_code = [[SynthDescLib.default.synthDescs.keys.asArray]];
+	local sc_code = [[SynthDescLib.default.synthDescs.keys.asArray.sort]];
 	local supercollider_return_code = "Synth(\'%s\');";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
@@ -26,7 +26,7 @@ end
 
 function M.postinfo_synthdescs()
 
-	local sc_code = [[SynthDescLib.global.synthDescs.keys.asArray;]];
+	local sc_code = [[SynthDescLib.global.synthDescs.keys.asArray.sort;]];
 
 	local supercollider_return_code = [[
 {
@@ -54,7 +54,7 @@ utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
 function M.postinfo_controlspecs()
-	local sc_code = [[ Spec.specs.keys.asArray ]];
+	local sc_code = [[ Spec.specs.keys.asArray.sort ]];
 
 	local returncode = [[
 	{
@@ -79,28 +79,28 @@ end
 
 -- Nodeproxy
 function M.stop_nodeproxy()
-	local sc_code = [[Ndef.all['localhost'].monitors.asArray]];
+	local sc_code = [[Ndef.all['localhost'].monitors.asArray.sort]];
 local supercollider_return_code = "%s.stop;";
 
 utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
 function M.play_nodeproxy()
-	local sc_code = [[Ndef.all['localhost'].existingProxies.asArray]];
+	local sc_code = [[Ndef.all['localhost'].existingProxies.asArray.sort]];
 	local supercollider_return_code = "Ndef(\'%s\').play;";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
 function M.clear_ndef()
-	local sc_code = [[Ndef.all['localhost'].existingProxies.asArray]];
+	local sc_code = [[Ndef.all['localhost'].existingProxies.asArray.sort]];
 	local supercollider_return_code = "Ndef(\'%s\').clear(1);";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
 function M.ndef_gui()
-	local sc_code = [[Ndef.all['localhost'].existingProxies.asArray]];
+	local sc_code = [[Ndef.all['localhost'].existingProxies.asArray.sort]];
 	local supercollider_return_code = "Ndef(\'%s\').gui();";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
@@ -108,21 +108,21 @@ end
 
 -- Pdef
 function M.play_pdef()
-	local sc_code = [[Pdef.all.keys]];
+	local sc_code = [[Pdef.all.keys.sort]];
 	local supercollider_return_code = "Pdef(\'%s\').play;";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
 function M.stop_pdef()
-	local sc_code = [[Pdef.all.keys.asArray.select{|k| Pdef(k).isPlaying};]];
+	local sc_code = [[Pdef.all.keys.asArray.select{|k| Pdef(k).isPlaying}.sort;]];
 	local supercollider_return_code = "Pdef(\'%s\').stop;";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
 function M.clear_pdef()
-	local sc_code = [[Pdef.all.keys]];
+	local sc_code = [[Pdef.all.keys.sort]];
 	local supercollider_return_code = "Pdef(\'%s\').clear;";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
@@ -130,7 +130,7 @@ end
 
 -- Introspect environment
 function M.current_environment()
-	local sc_code = [[currentEnvironment.keys.asArray]];
+	local sc_code = [[currentEnvironment.keys.asArray.sort]];
 	local supercollider_return_code = "currentEnvironment[\'%s\'].postln;";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
@@ -146,28 +146,28 @@ end
 
 -- MidiDef
 function M.free_mididef()
-	local sc_code = [[MIDIdef.all.keys.asArray]];
+	local sc_code = [[MIDIdef.all.keys.asArray.sort]];
 	local supercollider_return_code = "MIDIdef(\'%s\').free();";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
 function M.disable_mididef()
-	local sc_code = [[MIDIdef.all.keys.asArray]];
+	local sc_code = [[MIDIdef.all.keys.asArray.sort]];
 	local supercollider_return_code = "MIDIdef(\'%s\').disable();";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
 function M.enable_mididef()
-	local sc_code = [[MIDIdef.all.keys.asArray]];
+	local sc_code = [[MIDIdef.all.keys.asArray.sort]];
 	local supercollider_return_code = "MIDIdef(\'%s\').enable();";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
 function M.fix_mididef()
-	local sc_code = [[MIDIdef.all.keys.asArray]];
+	local sc_code = [[MIDIdef.all.keys.asArray.sort]];
 	local supercollider_return_code = "MIDIdef(\'%s\').fix();";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
@@ -175,28 +175,28 @@ end
 
 -- OSCdef
 function M.free_oscdef()
-	local sc_code = [[OSCdef.all.keys.asArray]];
+	local sc_code = [[OSCdef.all.keys.asArray.sort]];
 	local supercollider_return_code = "OSCdef(\'%s\').free();";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
 function M.disable_oscdef()
-	local sc_code = [[OSCdef.all.keys.asArray]];
+	local sc_code = [[OSCdef.all.keys.asArray.sort]];
 	local supercollider_return_code = "OSCdef(\'%s\').disable();";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
 function M.enable_oscdef()
-	local sc_code = [[OSCdef.all.keys.asArray]];
+	local sc_code = [[OSCdef.all.keys.asArray.sort]];
 	local supercollider_return_code = "OSCdef(\'%s\').enable();";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
 function M.fix_oscdef()
-	local sc_code = [[MIDIdef.all.keys.asArray]];
+	local sc_code = [[MIDIdef.all.keys.asArray.sort]];
 	local supercollider_return_code = "MIDIdef(\'%s\').fix();";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
@@ -218,14 +218,14 @@ function M.setmute_localserver()
 end
 
 function M.control_localserver()
-	local sc_code = [[ ['boot', 'reboot', 'quit', 'freeAll', 'queryAllNodes', 'makeGui'];]];
+	local sc_code = [[ ['boot', 'reboot', 'quit', 'freeAll', 'queryAllNodes', 'makeGui'].sort;]];
 	local supercollider_return_code = "Server.local.%s();";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
 function M.control_allservers()
-	local sc_code = [[ ['quitAll', 'killAll', 'freeAll', 'hardFreeAll'];]];
+	local sc_code = [[ ['quitAll', 'killAll', 'freeAll', 'hardFreeAll'].sort;]];
 	local supercollider_return_code = "Server.%s();";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
