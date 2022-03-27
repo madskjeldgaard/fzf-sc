@@ -1,5 +1,3 @@
--- local utils = require"fzf-sc/utils"
-
 local M = {}
 
 function M.setup(user_settings)
@@ -21,18 +19,7 @@ function M.setup(user_settings)
 	M.options = settings.options or {}
 	for opt_name,v in pairs(default_options) do
 		M.options[opt_name] = M.options[opt_name] or v
-		-- print(settings.options[opt_name])
-		-- print(opt_name,M.options[opt_name])
-		-- print(opt_name,v)
 	end
-
-	-- TODO
-	-- Add user defined finders
-	-- if settings.custom_finders ~= nil then
-	-- 	for finder_name, finder_func in pairs(settings.custom_finders) do
-	-- 		require"fzf-sc.finders"[finder_name] = finder_func
-	-- 	end
-	-- end
 
 	M.register_command()
 end
