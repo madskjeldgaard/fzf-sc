@@ -72,7 +72,7 @@ To see the rest, type `:FzfSC<tab>` on the command line to autocomplete the avai
 Invoking the commands directly works like this. An example using the `scales` finder:
 
 ```bash
-:FzfSC scales
+:FzfSC play_scales
 ```
 
 ## Make your own fuzzy finder
