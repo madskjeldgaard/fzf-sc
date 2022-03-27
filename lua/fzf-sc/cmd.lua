@@ -35,6 +35,7 @@ end
 
 function M.get_command_names()
 	local keys = vim.tbl_keys(require"fzf-sc/finders")
+	table.sort(keys)
 	return keys
 end
 
