@@ -54,11 +54,21 @@ function M.fzf_sc_eval(sc_code, callback_sc_code)
 			local scReturnVal = M.split_string_to_array(returnVal)
 
 			-- Callback function
-			local sinkFunction = function (val)
-				local formatted = string.format(callback_sc_code, val)
-				-- print(formatted)
-				require'scnvim'.send(formatted)
-			end;
+			local sinkFunction;
+
+			if type(callback_sc_code) == "string" then
+				sinkFunction = function (val)
+					local formatted = string.format(callback_sc_code, val)
+					-- print(formatted)
+					require'scnvim'.send(formatted)
+				end;
+			elseif type(callback_sc_code) == "function" then
+				sinkFunction = function (val)
+					callback_sc_code(val)
+				end
+			else
+				-- TODO: print error
+			end
 
 			-- If using nvim-fzf
 			if require'fzf-sc'.search_plugin == "nvim-fzf" then
