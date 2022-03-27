@@ -2,14 +2,14 @@ local utils = require"fzf-sc/utils"
 local M = {}
 
 -- Quarks
-function M.quark_install()
+function M.install_quark()
 	local sc_code = [[Quarks.fetchDirectory; Quarks.all.collect{|q| q.name}]];
 	local supercollider_return_code = "Quarks.install(\"%s\");";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
-function M.quark_uninstall()
+function M.uninstall_quark()
 	local sc_code = [[Quarks.installed.collect{|q| q.name}]];
 	local supercollider_return_code = "Quarks.uninstall(\"%s\");";
 
