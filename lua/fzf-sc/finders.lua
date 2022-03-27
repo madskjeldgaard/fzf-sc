@@ -218,7 +218,7 @@ function M.setmute_localserver()
 end
 
 function M.control_localserver()
-	local sc_code = [[ ['boot', 'reboot', 'quit', 'freeAll', 'queryAllNodes'];]];
+	local sc_code = [[ ['boot', 'reboot', 'quit', 'freeAll', 'queryAllNodes', 'makeGui'];]];
 	local supercollider_return_code = "Server.local.%s();";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
