@@ -25,11 +25,15 @@ function M.fuzzy_commands()
 end
 
 function M.load_command(command)
-	if command ~= nil then
-		-- FIXME: This is a hack. When the command is chosen using fuzzy_commands, vim will go into normal mode before opening up the chosen fuzzy finder.
-		finders[command]()
+	if not require"scnvim/sclang".is_running() then
+		print("[fzf-sc] sclang not running")
+		return
 	else
-		M.fuzzy_commands()
+		if command ~= nil then
+			finders[command]()
+		else
+			M.fuzzy_commands()
+		end
 	end
 end
 
