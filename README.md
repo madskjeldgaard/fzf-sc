@@ -19,6 +19,7 @@ Fuzzy search basically anything in SuperCollider and execute SuperCollider code 
 ```lua
 use {
 	'madskjeldgaard/fzf-sc',
+	after = "scnvim",
 	config = function()
 		require'fzf-sc'.setup({ 
 			search_plugin = "nvim-fzf", 
