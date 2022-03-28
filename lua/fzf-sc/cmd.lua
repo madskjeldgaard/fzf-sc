@@ -25,16 +25,16 @@ function M.fuzzy_commands()
 end
 
 function M.load_command(command)
-	if not require"scnvim/sclang".is_running() then
-		print("[fzf-sc] sclang not running")
-		return
-	else
+	-- if not require"scnvim/sclang".is_running() then
+	-- 	print("[fzf-sc] sclang not running")
+	-- 	return
+	-- else
 		if command ~= nil then
 			finders[command]()
 		else
 			M.fuzzy_commands()
 		end
-	end
+	-- end
 end
 
 function M.get_command_names()
