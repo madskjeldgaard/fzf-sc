@@ -59,7 +59,7 @@ function M.postinfo_controlspecs()
 	local returncode = [[
 	{
 	var specIndex = '%s';
-	var outString = "-----------";
+	var outString = "-----------\n";
 	var spec = ControlSpec.specs[specIndex];
 
 	outString = outString ++ "ControlSpec " ++ specIndex ++ ":\n";
@@ -74,7 +74,7 @@ function M.postinfo_controlspecs()
 	}.value();
 	]]
 
-	require"fzf-sc/finders".controlspecs = function() require"fzf-sc/utils".fzf_sc_eval(sc_code, returncode) end
+	require"fzf-sc/utils".fzf_sc_eval(sc_code, returncode)
 end
 
 -- Nodeproxy
