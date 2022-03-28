@@ -67,18 +67,37 @@ function M.fzf_sc_eval(sc_code, callback_sc_code)
 					callback_sc_code(val)
 				end
 			else
-				-- TODO: print error
+				print("[fzf-sc] callback is wrong type")
+				return
 			end
 
 			-- If using nvim-fzf
 			if require'fzf-sc'.search_plugin == "nvim-fzf" then
+				-- Preview
+				-- Inspiration: https://github.com/vijaymarupudi/nvim-fzf-commands/blob/master/lua/fzf-commands/bufferpicker.lua
+				local preview_function
+
+				if not prompt then prompt = "fzf-sc: " end
+				-- if not header then header = "" end
+-- "--header " .. header ..
+				local fzfopts =  "--prompt " .. prompt .. " "
+				if preview then
+					-- coroutine.wrap(function ()
+					preview_function = action(preview)
+					-- end)
+
+					if not preview_size then preview_size = "10" end
+					fzfopts = fzfopts .. "--preview=" .. preview_function .. " --preview-window bottom:" .. preview_size .. " "
+				end
+
 				coroutine.wrap(function()
-					local result = require'fzf'.fzf(scReturnVal, "", require"fzf-sc".options);
+					local result = require'fzf'.fzf(scReturnVal, fzfopts, require"fzf-sc".options);
 					if result then
 						-- print(result[1])
 						sinkFunction(result[1])
 					end;
 				end)();
+
 				-- If using fzf.vim
 			elseif require'fzf-sc'.search_plugin == "fzf.vim" then
 				local specs = {["source"] = scReturnVal, ["sink"] = sinkFunction}
