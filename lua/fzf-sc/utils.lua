@@ -46,9 +46,18 @@ function M.split_string_to_array(arrayAsString)
 end
 
 -- sc_code is a string containing supercollider code that produces an array, eg [[Quarks.all]]
--- callback_sc_code is a format string with the supercollider code
--- that will be executed with the chosen item insert, eg "Quarks.install(\"%s\");"
-function M.fzf_sc_eval(sc_code, callback_sc_code)
+-- callback_sc_code is a format string with the supercollider code that will be executed with the chosen item insert, eg "Quarks.install(\"%s\");"
+-- prompt is a string that will be displayed as the prompt
+-- preview is a function that will be used as callback for the preview. It's return value is displayed in the preview window. If nil, then no preview window is displayed.
+-- preview_size is the size of the preview window. Default is 10. If you only need the preview function as a callback, set this to 0
+function M.fzf_sc_eval(sc_code, callback_sc_code, prompt, preview, preview_size)
+	assert(sc_code)
+	assert(callback_sc_code)
+
+	if not require"scnvim/sclang".is_running() then
+		print("[fzf-sc] sclang is not running")
+	end
+
 	require'scnvim'.eval(sc_code,
 		function (returnVal)
 			local scReturnVal = M.split_string_to_array(returnVal)
