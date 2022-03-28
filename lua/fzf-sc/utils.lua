@@ -1,4 +1,5 @@
 local M = {}
+local action = require("fzf.actions").action
 
 -- ------------------------------------
 -- Utilities
