@@ -78,9 +78,11 @@ Invoking the commands directly works like this. An example using the `scales` fi
 
 ## Make your own fuzzy finder
 
-### A simple finder
+To make your own finder, you need two things: Some supercollider code that generates an array and a callback (can be either SuperCollider or Lua). The callback is a piece of code that takes the result of your choice and does something with it. 
 
-Making your own fuzzy finder is fairly simple. You need two things: Some supercollider code that generates an array, some supercollider code that takes the result of your choice in the fuzzy finder and does something with that knowledge. Here is an example of getting all quarks as input and then installing the chosen item in the return code. The return code is a string where `%s` is replaced with the result of the fuzzy search, eg in the example below it will be the name of the quark the user chooses.
+### Using a supercollider callback
+
+Here is an example of getting all quarks as input and then installing the chosen item in the return code. The return code is a string where `%s` is replaced with the result of the fuzzy search, eg in the example below it will be the name of the quark the user chooses.
 
 By adding your finder to `fzf-sc/finders`, it will automatically show up when you run `:FzfSC` as well as in autocompletion when typing `:FzfSC <tab>`.
 
