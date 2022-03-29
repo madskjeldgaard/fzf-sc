@@ -78,6 +78,8 @@ Invoking the commands directly works like this. An example using the `scales` fi
 
 ## Make your own fuzzy finder
 
+### A simple finder
+
 Making your own fuzzy finder is fairly simple. You need two things: Some supercollider code that generates an array, some supercollider code that takes the result of your choice in the fuzzy finder and does something with that knowledge. Here is an example of getting all quarks as input and then installing the chosen item in the return code. The return code is a string where `%s` is replaced with the result of the fuzzy search, eg in the example below it will be the name of the quark the user chooses.
 
 By adding your finder to `fzf-sc/finders`, it will automatically show up when you run `:FzfSC` as well as in autocompletion when typing `:FzfSC <tab>`.
@@ -86,11 +88,36 @@ By adding your finder to `fzf-sc/finders`, it will automatically show up when yo
 require"fzf-sc/finders".my_quark_installer = 
 function()
 	local sc_code = [[Quarks.fetchDirectory; Quarks.all.collect{|q| q.name}]];
-	local supercollider_return_code = [[Quarks.install("%s");]];
+	local supercollider_callback = [[Quarks.install("%s");]];
 
-	require"fzf-sc/utils".fzf_sc_eval(sc_code, supercollider_return_code)
+	require"fzf-sc/utils".fzf_sc_eval(sc_code, supercollider_callback)
 end
 ```
+
+### Using a lua callback
+
+Instead of using SuperCollider in the callback, it is also possible to pass your choice from the fuzzy list to a lua function and make use of Neovim's lua api.
+
+```lua
+require"fzf-sc/finders".my_quark_browser = 
+function()
+
+	-- Get a list of all quark folders in your system and convert them to full paths
+	local sc_code = [[PathName(Quarks.folder).folders.collect{|folder| folder.fullPath}
+]];
+
+	-- This callback opens the chosen folder in a new tab
+	local callback = function(val) 
+		vim.cmd("tabnew " ..val) 
+	end
+
+	require"fzf-sc/utils".fzf_sc_eval(sc_code, callback)
+end
+```
+
+### More inspiration 
+
+For more inspiration [see this file](lua/fzf-sc/finders.lua). 
 
 ## Contributing a finder
 

@@ -51,9 +51,9 @@ end
 -- prompt is a string that will be displayed as the prompt
 -- preview is a function that will be used as callback for the preview. It's return value is displayed in the preview window. If nil, then no preview window is displayed.
 -- preview_size is the size of the preview window. Default is 10. If you only need the preview function as a callback, set this to 0
-function M.fzf_sc_eval(sc_code, callback_sc_code, prompt, preview, preview_size)
+function M.fzf_sc_eval(sc_code, callback, prompt, preview, preview_size)
 	assert(sc_code)
-	assert(callback_sc_code)
+	assert(callback)
 
 	if not require"scnvim/sclang".is_running() then
 		print("[fzf-sc] sclang is not running")
@@ -66,15 +66,15 @@ function M.fzf_sc_eval(sc_code, callback_sc_code, prompt, preview, preview_size)
 			-- Callback function
 			local sinkFunction;
 
-			if type(callback_sc_code) == "string" then
+			if type(callback) == "string" then
 				sinkFunction = function (val)
-					local formatted = string.format(callback_sc_code, val)
+					local formatted = string.format(callback, val)
 					-- print(formatted)
 					require'scnvim'.send(formatted)
 				end;
-			elseif type(callback_sc_code) == "function" then
+			elseif type(callback) == "function" then
 				sinkFunction = function (val)
-					callback_sc_code(val)
+					callback(val)
 				end
 			else
 				print("[fzf-sc] callback is wrong type")
