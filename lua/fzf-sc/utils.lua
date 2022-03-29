@@ -90,7 +90,7 @@ function M.fzf_sc_eval(sc_code, callback_sc_code, prompt, preview, preview_size)
 				if not prompt then prompt = "fzf-sc: " end
 				-- if not header then header = "" end
 -- "--header " .. header ..
-				local fzfopts =  "--prompt " .. prompt .. " "
+				local fzfopts =  "--ansi --prompt " .. prompt .. " "
 				if preview then
 					-- coroutine.wrap(function ()
 					preview_function = action(preview)
