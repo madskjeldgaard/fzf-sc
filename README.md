@@ -10,7 +10,7 @@ Fuzzy search basically anything in SuperCollider and execute SuperCollider code 
 
 - [nvim-fzf](https://github.com/vijaymarupudi/nvim-fzf)(recommended) or [fzf.vim](https://github.com/junegunn/fzf.vim)
 - [scnvim](https://github.com/davidgranstrom/scnvim)
-- Nvim >= v0.5
+- Nvim >= v0.7
 
 ## Installation
 
