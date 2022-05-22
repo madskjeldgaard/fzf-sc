@@ -1,22 +1,23 @@
 local M = {}
 local action = require("fzf.actions").action
+local scpath = require "scnvim/path"
 
 -- ------------------------------------
 -- Utilities
 -- ------------------------------------
 
 -- @FIXME Only works for initial boot
-M.booted = false;
-function M.serverHasBooted()
-	require"scnvim".eval("s.hasBooted", function(result)
-		if result then
-			M.booted = result
-		end
-	end)
-
-	return M.booted
-
-end
+-- M.booted = false;
+-- function M.serverHasBooted()
+-- 	require"scnvim".eval("s.hasBooted", function(result)
+-- 		if result then
+-- 			M.booted = result
+-- 		end
+-- 	end)
+--
+-- 	return M.booted
+--
+-- end
 
 function M.rm_whitespace(instring)
 	return string.gsub(instring, "%s", "");
@@ -121,8 +122,8 @@ function M.fzf_sc_eval(sc_code, callback, prompt, preview, preview_size)
 end
 
 function scnvim_unpack_tags_table()
-	local root = require'scnvim.utils'.get_scnvim_root_dir()
-	local classes = root .. "/scnvim-data/tags"
+	local root = scpath.get_plugin_root_dir()
+	local classes = scpath.get_cache_dir() .. "/tags"
 	local tagsfile = io.open(classes)
 	local help = {}
 

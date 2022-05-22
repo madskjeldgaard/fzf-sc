@@ -1,9 +1,10 @@
 local M = {}
+local scpath = require "scnvim/path"
 
 -- Unpack csv file with tags into lua table
 function M.scnvim_unpack_tags_table()
-	local root = vim.g.scnvim_root_dir
-	local classes = root .. "/scnvim-data/tags"
+	local root = scpath.get_plugin_root_dir()
+	local classes = scpath.get_cache_dir() .. "/tags"
 	local tagsfile = io.open(classes)
 	local help = {}
 
@@ -28,7 +29,7 @@ function M.scnvim_help_keys()
 end
 
 function M.fzf_sc_help()
-	local scnvim_help_open = vim.fn["scnvim#help#open_help_for"]
+	local scnvim_help_open = require"scnvim/help".prepare_help_for
 
 	local help = M.scnvim_unpack_tags_table()
 	local help_keys = {};
