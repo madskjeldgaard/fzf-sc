@@ -2,7 +2,7 @@
 
 ![Fuzzy scales](assets/fzfsc-fuzzyscales.gif)
 
-Use the power of [fzf](https://github.com/junegunn/fzf) to get the best out of [SuperCollider](https://supercollider:github::o/):
+Use the power of [fzf](https://github.com/junegunn/fzf) to get the best out of [SuperCollider](https://supercollider.github.io/):
 
 Fuzzy search basically anything in SuperCollider and execute SuperCollider code with the result of that search.
 
