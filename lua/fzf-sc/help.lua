@@ -29,7 +29,7 @@ function M.scnvim_help_keys()
 end
 
 function M.fzf_sc_help()
-	local scnvim_help_open = require"scnvim/help".prepare_help_for
+	local scnvim_help_open = require"scnvim/help".open_help_for
 
 	local help = M.scnvim_unpack_tags_table()
 	local help_keys = {};
