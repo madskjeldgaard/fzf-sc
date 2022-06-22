@@ -3,7 +3,7 @@
 SuperCollider interface for the NeoVim-plugin fzf-sc
 
 Example usage:
-fzf-sc.new("johnnybobby", "(1..10)", "\"%s\".postln")
+FZFSC.new("johnnybobby", "(1..10)", "\"%s\".postln")
 
 */
 FZFSC {
