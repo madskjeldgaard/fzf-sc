@@ -71,7 +71,29 @@ Invoking the commands directly works like this. An example using the `scales` fi
 
 To make your own finder, you need two things: Some supercollider code that generates an array and a callback (can be either SuperCollider or Lua). The callback is a piece of code that takes the result of your choice and does something with it. 
 
-### Using a supercollider callback
+
+### Defining a fuzzy finder in SuperCollider
+
+This plugin comes with a SuperCollider class that makes it easy to define your own custom fuzzy finders. This allows you to add project based or setup specific finders that maybe aren't relevant for everyone but very relevant for you :)
+
+```supercollider
+FZFSC.new(
+	// The name of your finder. You can invoke it in NeoVim by running the following command in nvim:
+	// :SCNvimExt fzf-sc.fuzz numberlister
+	// And additionally, it is available in the main list of finders:
+	// :SCNvimExt fzf-sc.fuzz
+	name: "numberlister", 
+
+	// A piece of SuperCollider code that returns an array of some things that we can fuzzy find over
+	itemsCode: "[1,5,2,4,3,9,666]",
+
+	// A formatted string containing a piece of SuperCollider code. 
+	// The %s bit will be replaced with the item you chose from the array above.
+	callbackFunc: "\"%s\".postln"
+)
+```
+
+### Defining a fuzzy finder in LUA
 
 Here is an example of getting all quarks as input and then installing the chosen item in the return code. The return code is a string where `%s` is replaced with the result of the fuzzy search, eg in the example below it will be the name of the quark the user chooses.
 
@@ -89,7 +111,7 @@ function()
 end
 ```
 
-### Using a lua callback
+#### Using a lua callback
 
 Instead of using SuperCollider in the callback, it is also possible to pass your choice from the fuzzy list to a lua function and make use of Neovim's lua api.
 
