@@ -57,7 +57,7 @@ function M.fzf_sc_eval(sc_code, callback, prompt, preview, preview_size)
 	assert(callback)
 
 	if not require"scnvim/sclang".is_running() then
-		print("[fzfsc] sclang is not running")
+		print("[fzf-sc] sclang is not running")
 	end
 
 	require'scnvim'.eval(sc_code,
@@ -78,17 +78,17 @@ function M.fzf_sc_eval(sc_code, callback, prompt, preview, preview_size)
 					callback(val)
 				end
 			else
-				print("[fzfsc] callback is wrong type")
+				print("[fzf-sc] callback is wrong type")
 				return
 			end
 
 			-- If using nvim-fzf
-			if require"scnvim._extensions.fzfsc.main".search_plugin == "nvim-fzf" then
+			if require"scnvim._extensions.fzf-sc.main".search_plugin == "nvim-fzf" then
 				-- Preview
 				-- Inspiration: https://github.com/vijaymarupudi/nvim-fzf-commands/blob/master/lua/fzf-commands/bufferpicker.lua
 				local preview_function
 
-				if not prompt then prompt = "fzfsc: " end
+				if not prompt then prompt = "fzf-sc: " end
 				-- if not header then header = "" end
 -- "--header " .. header ..
 				local fzfopts =  "--ansi --prompt " .. prompt .. " "
@@ -102,7 +102,7 @@ function M.fzf_sc_eval(sc_code, callback, prompt, preview, preview_size)
 				end
 
 				coroutine.wrap(function()
-					local result = require'fzf'.fzf(scReturnVal, fzfopts, require"scnvim._extensions.fzfsc.main".options);
+					local result = require'fzf'.fzf(scReturnVal, fzfopts, require"scnvim._extensions.fzf-sc.main".options);
 					if result then
 						-- print(result[1])
 						sinkFunction(result[1])
@@ -110,11 +110,11 @@ function M.fzf_sc_eval(sc_code, callback, prompt, preview, preview_size)
 				end)();
 
 				-- If using fzf.vim
-			elseif require"scnvim._extensions.fzfsc.main".search_plugin == "fzf.vim" then
+			elseif require"scnvim._extensions.fzf-sc.main".search_plugin == "fzf.vim" then
 				local specs = {["source"] = scReturnVal, ["sink"] = sinkFunction}
 				vim.fn["fzf#run"](specs)
 			else
-				error("fzfsc: No fzf plugin defined")
+				error("fzf-sc: No fzf plugin defined")
 			end
 
 		end
@@ -150,7 +150,7 @@ function M.definitions()
 		vim.cmd("spl " .. lookup_path)
 	end
 
-	if require"scnvim._extensions.fzfsc.main".search_plugin == "nvim-fzf" then
+	if require"scnvim._extensions.fzf-sc.main".search_plugin == "nvim-fzf" then
 		coroutine.wrap(function()
 			local result = require'fzf'.fzf(help_keys);
 			if result then
@@ -158,7 +158,7 @@ function M.definitions()
 			end;
 		end)();
 	else
-		error("fzfsc: Only supported for nvim-fzf")
+		error("fzf-sc: Only supported for nvim-fzf")
 	end
 end
 

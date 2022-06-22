@@ -1,6 +1,6 @@
 # fzf-sc
 
-![Fuzzy scales](assets/fzfsc-fuzzyscales.gif)
+![Fuzzy scales](assets/fzf-sc-fuzzyscales.gif)
 
 Use the power of [fzf](https://github.com/junegunn/fzf) to get the best out of [SuperCollider](https://supercollider.github.io/):
 
@@ -41,7 +41,7 @@ Load the extension **after** the call to `scnvim.setup`.
 ```lua
 scnvim.setup{...}
 
-scnvim.load_extension('fzfsc')
+scnvim.load_extension('fzf-sc')
 ```
 
 
@@ -57,14 +57,14 @@ require'fzf-sc'.setup({
 ```
 
 ## Available commands
-`:SCNvimExt fzfsc.fuzz`
+`:SCNvimExt fzf-sc.fuzz`
 
 Fuzzy search the fuzzy finders. Gets list of all fuzzy search commands. Choose one and execute it.
 
 Invoking the commands directly works like this. An example using the `scales` finder:
 
 ```bash
-:SCNvimExt fzfsc.fuzz play_scales
+:SCNvimExt fzf-sc.fuzz play_scales
 ```
 
 ## Make your own fuzzy finder
@@ -75,12 +75,12 @@ To make your own finder, you need two things: Some supercollider code that gener
 
 Here is an example of getting all quarks as input and then installing the chosen item in the return code. The return code is a string where `%s` is replaced with the result of the fuzzy search, eg in the example below it will be the name of the quark the user chooses.
 
-By adding your finder to `finders.lua`, it will automatically show up when you run `:SCNvimExt fzfsc.fuzz`.
+By adding your finder to `finders.lua`, it will automatically show up when you run `:SCNvimExt fzf-sc.fuzz`.
 
 ```lua
-local utils = require"scnvim._extensions.fzfsc.utils"
+local utils = require"scnvim._extensions.fzf-sc.utils"
 
-require"scnvim._extensions.fzfsc.finders".my_quark_installer = 
+require"scnvim._extensions.fzf-sc.finders".my_quark_installer = 
 function()
 	local sc_code = [[Quarks.fetchDirectory; Quarks.all.collect{|q| q.name}]];
 	local supercollider_callback = [[Quarks.install("%s");]];
@@ -94,9 +94,9 @@ end
 Instead of using SuperCollider in the callback, it is also possible to pass your choice from the fuzzy list to a lua function and make use of Neovim's lua api.
 
 ```lua
-local utils = require"scnvim._extensions.fzfsc.utils"
+local utils = require"scnvim._extensions.fzf-sc.utils"
 
-require"scnvim._extensions.fzfsc.finders".my_quark_browser = 
+require"scnvim._extensions.fzf-sc.finders".my_quark_browser = 
 function()
 
 	-- Get a list of all quark folders in your system and convert them to full paths
@@ -114,10 +114,10 @@ end
 
 ### More inspiration 
 
-For more inspiration [see this file](lua/scnvim/_extensions/fzfsc/finders.lua). 
+For more inspiration [see this file](lua/scnvim/_extensions/fzf-sc/finders.lua). 
 
 ## Contributing a finder
 
-Finders are defined in [this file](lua/scnvim/_extensions/fzfsc/finders.lua). 
+Finders are defined in [this file](lua/scnvim/_extensions/fzf-sc/finders.lua). 
 
 If you feel like contributing a finder, that's where to do it.

@@ -3,7 +3,7 @@
 SuperCollider interface for the NeoVim-plugin fzf-sc
 
 Example usage:
-FZFSC.new("johnnybobby", "(1..10)", "\"%s\".postln")
+fzf-sc.new("johnnybobby", "(1..10)", "\"%s\".postln")
 
 */
 FZFSC {
@@ -27,7 +27,7 @@ FZFSC {
 
     // Retrieve the finder in lua code
     getFinder{|name|
-        ^'require \"scnvim._extensions.fzfsc.finders\".' ++ name
+        ^'require \"scnvim._extensions.fzf-sc.finders\".' ++ name
     }
 
     // TODO allow lua callback
@@ -37,7 +37,7 @@ FZFSC {
         luacode = "print('adding fzf-sc finder %');"
         ++ "% = function() local sc_code = [[%]];"
         ++ "local supercollider_callback = [[%;]];"
-        ++ "require'scnvim._extensions.fzfsc.utils'.fzf_sc_eval(sc_code, supercollider_callback);"
+        ++ "require'scnvim._extensions.fzf-sc.utils'.fzf_sc_eval(sc_code, supercollider_callback);"
         ++ "end";
 
         luacode = luacode.format(

@@ -1,6 +1,6 @@
 local M = {}
 
-local finders = require"scnvim._extensions.fzfsc.finders"
+local finders = require"scnvim._extensions.fzf-sc.finders"
 
 function M.get_command_names()
 	local keys = vim.tbl_keys(finders)
@@ -27,13 +27,13 @@ function M.fuzzy_commands()
 		local specs = {["source"] = M.get_command_names(), ["sink"] = M.load_command}
 		vim.fn["fzf#run"](specs)
 	else
-		error("fzfsc: No fzf plugin defined")
+		error("fzf-sc: No fzf plugin defined")
 	end
 end
 
 function M.load_command(command)
 	-- if not require"scnvim/sclang".is_running() then
-	-- 	print("[fzfsc] sclang not running")
+	-- 	print("[fzf-sc] sclang not running")
 	-- 	return
 	-- else
 		if command ~= nil then

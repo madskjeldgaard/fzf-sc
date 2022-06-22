@@ -1,14 +1,14 @@
--- local fzfsc = require 'scnvim._extensions.fzfsc.main'
-local commands = require 'scnvim._extensions.fzfsc.main'
+-- local fzf-sc = require 'scnvim._extensions.fzf-sc.main'
+local commands = require 'scnvim._extensions.fzf-sc.main'
 
 local function register_command()
 vim.cmd[[
-function s:fzfsc_complete(arg,line,pos)
-	let l:commands = luaeval("require'scnvim._extensions.fzfsc.main'.get_command_names()")
+function s:fzfsc_coplete(arg,line,pos)
+	let l:commands = luaeval("require'scnvim._extensions.fzf-sc.main'.get_command_names()")
     return join(sort(commands), "\n")
 endfunction
 
-command! -nargs=? -complete=custom,s:fzfsc_complete FzfSC lua require('scnvim._extensions.fzfsc.main').load_command(<f-args>)
+command! -nargs=? -complete=custom,s:fzfsc_complete FzfSC lua require('scnvim._extensions.fzf-sc.main').load_command(<f-args>)
 ]]
 end
 
@@ -39,7 +39,7 @@ end,
 
 exports = {
 	-- List all finders if no argument added.
-	-- If a string is added as argument, it will use that string as the name of a finder, eg. SCNvimExt fzfsc.fuzz help
+	-- If a string is added as argument, it will use that string as the name of a finder, eg. SCNvimExt fzf-sc.fuzz help
 	fuzz = commands.load_command,
 },
 

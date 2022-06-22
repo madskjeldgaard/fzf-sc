@@ -1,5 +1,5 @@
-local help = require"scnvim._extensions.fzfsc.help"
-local utils = require"scnvim._extensions.fzfsc.utils"
+local help = require"scnvim._extensions.fzf-sc.help"
+local utils = require"scnvim._extensions.fzf-sc.utils"
 local M = {}
 
 -- Quarks
