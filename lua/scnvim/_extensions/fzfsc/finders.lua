@@ -1,4 +1,5 @@
-local utils = require"fzf-sc/utils"
+local help = require"scnvim._extensions.fzfsc.help"
+local utils = require"scnvim._extensions.fzfsc.utils"
 local M = {}
 
 -- Quarks
@@ -74,7 +75,7 @@ function M.postinfo_controlspecs()
 	}.value();
 	]]
 
-	require"fzf-sc/utils".fzf_sc_eval(sc_code, returncode)
+	utils.fzf_sc_eval(sc_code, returncode)
 end
 
 -- Nodeproxy
@@ -108,7 +109,7 @@ end
 
 -- Pdef
 function M.play_pdef()
-	local sc_code = [[Pdef.all.keys.sort]];
+	local sc_code = [[Pdef.all.keys.sort.asArray]];
 	local supercollider_return_code = "Pdef(\'%s\').play;";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
@@ -122,7 +123,7 @@ function M.stop_pdef()
 end
 
 function M.clear_pdef()
-	local sc_code = [[Pdef.all.keys.sort]];
+	local sc_code = [[Pdef.all.keys.sort.asArray]];
 	local supercollider_return_code = "Pdef(\'%s\').clear;";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
@@ -138,7 +139,7 @@ end
 
 -- Introspect scales
 function M.play_scales()
-	local sc_code = [[Scale.names.sort;]];
+	local sc_code = [[Scale.names.sort.asArray;]];
 	local supercollider_return_code = "~fzf_scale=\\%s;Pbind(\\scale, Scale.at(~fzf_scale), \\degree, Pseq((0..Scale.at(~fzf_scale).degrees.size-1),1), \\dur, 0.25).play;Scale.at(~fzf_scale).postln;";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
@@ -239,7 +240,7 @@ function M.switch_localserver()
 end
 
 function M.help()
-	require'fzf-sc/help'.fzf_sc_help()
+	help.fzf_sc_help()
 end
 
 function M.definitions()

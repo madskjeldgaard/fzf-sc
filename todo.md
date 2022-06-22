@@ -1,2 +1,1 @@
-- Make it possible to use lua functions as callback that receive the result of a fzf_sc_eval's function
 - Figure out how to make a preview window for relevant commands (like the synth def searcher that may show controls, default values, metadata etc in the preview window?)

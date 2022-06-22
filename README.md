@@ -19,27 +19,13 @@ Fuzzy search basically anything in SuperCollider and execute SuperCollider code 
 ```lua
 use {
 	'madskjeldgaard/fzf-sc',
-	after = "scnvim",
-	config = function()
-		require'fzf-sc'.setup({ 
-			search_plugin = "nvim-fzf", 
-			options = {
-				height = 50,
-				width = 33,
-				-- row = 4,
-				-- col = 4,
-				relative = 'editor',
-				border = false,
-				fzf_binary = "fzf" -- Or "skim"
-			}
-		})
-	end,
 	requires = {
 		'vijaymarupudi/nvim-fzf',
 		'davidgranstrom/scnvim'
 	}
 }
 ```
+
 
 ### vim-plug
 For vim-plug users, add this to your init.vim:
@@ -50,7 +36,14 @@ Then run `:PlugInstall`.
 
 ## Setup
 
-Somewhere in your config file for neovim, add `lua require'fzf-sc'.setup()` if you're using `init.vim` or `require'fzf-sc'.setup()` for init.lua.
+Load the extension **after** the call to `scnvim.setup`.
+
+```lua
+scnvim.setup{...}
+
+scnvim.load_extension('fzfsc')
+```
+
 
 ### Configuration
 
@@ -64,16 +57,14 @@ require'fzf-sc'.setup({
 ```
 
 ## Available commands
-`:FzfSC`
+`:SCNvimExt fzfsc.fuzz`
 
 Fuzzy search the fuzzy finders. Gets list of all fuzzy search commands. Choose one and execute it.
-
-To see the rest, type `:FzfSC<tab>` on the command line to autocomplete the available commands.
 
 Invoking the commands directly works like this. An example using the `scales` finder:
 
 ```bash
-:FzfSC play_scales
+:SCNvimExt fzfsc.fuzz play_scales
 ```
 
 ## Make your own fuzzy finder
@@ -84,15 +75,17 @@ To make your own finder, you need two things: Some supercollider code that gener
 
 Here is an example of getting all quarks as input and then installing the chosen item in the return code. The return code is a string where `%s` is replaced with the result of the fuzzy search, eg in the example below it will be the name of the quark the user chooses.
 
-By adding your finder to `fzf-sc/finders`, it will automatically show up when you run `:FzfSC` as well as in autocompletion when typing `:FzfSC <tab>`.
+By adding your finder to `finders.lua`, it will automatically show up when you run `:SCNvimExt fzfsc.fuzz`.
 
 ```lua
-require"fzf-sc/finders".my_quark_installer = 
+local utils = require"scnvim._extensions.fzfsc.utils"
+
+require"scnvim._extensions.fzfsc.finders".my_quark_installer = 
 function()
 	local sc_code = [[Quarks.fetchDirectory; Quarks.all.collect{|q| q.name}]];
 	local supercollider_callback = [[Quarks.install("%s");]];
 
-	require"fzf-sc/utils".fzf_sc_eval(sc_code, supercollider_callback)
+	utils.fzf_sc_eval(sc_code, supercollider_callback)
 end
 ```
 
@@ -101,7 +94,9 @@ end
 Instead of using SuperCollider in the callback, it is also possible to pass your choice from the fuzzy list to a lua function and make use of Neovim's lua api.
 
 ```lua
-require"fzf-sc/finders".my_quark_browser = 
+local utils = require"scnvim._extensions.fzfsc.utils"
+
+require"scnvim._extensions.fzfsc.finders".my_quark_browser = 
 function()
 
 	-- Get a list of all quark folders in your system and convert them to full paths
@@ -113,16 +108,16 @@ function()
 		vim.cmd("tabnew " ..val) 
 	end
 
-	require"fzf-sc/utils".fzf_sc_eval(sc_code, callback)
+	utils.fzf_sc_eval(sc_code, callback)
 end
 ```
 
 ### More inspiration 
 
-For more inspiration [see this file](lua/fzf-sc/finders.lua). 
+For more inspiration [see this file](lua/scnvim/_extensions/fzfsc/finders.lua). 
 
 ## Contributing a finder
 
-Finders are defined in [this file](lua/fzf-sc/finders.lua). 
+Finders are defined in [this file](lua/scnvim/_extensions/fzfsc/finders.lua). 
 
-If you feel like contributing a finder, that's where to do it. Just add a function like the ones in that file and it will automatically show up as an option for a command when autocompleting `:FzfSC<tab>` or just running `:FzfSC`.
+If you feel like contributing a finder, that's where to do it.
