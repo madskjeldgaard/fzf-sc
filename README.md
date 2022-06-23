@@ -50,10 +50,13 @@ scnvim.load_extension('fzf-sc')
 fzf-sc may be configured by supplying a table to the setup function in a lua file:
 
 ```lua
-require'fzf-sc'.setup({
-	-- Set to "nvim-fzf" if you have that plugin installed
-	search_plugin = "fzf.vim" 
-})
+scnvim.setup {
+  extensions = {
+    ['fzf-sc'] = {
+      search_plugin = 'nvim-fzf',
+    },
+  }
+}
 ```
 
 ## Available commands
