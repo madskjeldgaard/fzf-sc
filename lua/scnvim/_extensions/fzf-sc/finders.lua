@@ -4,14 +4,14 @@ local M = {}
 
 -- Quarks
 function M.install_quark()
-	local sc_code = [[Quarks.fetchDirectory; Quarks.all.collect{|q| q.name}.sort]];
+	local sc_code = [[Quarks.fetchDirectory; Quarks.all.asArray.collect{|q| q.name}.sort]];
 	local supercollider_return_code = "Quarks.install(\"%s\");";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
 function M.uninstall_quark()
-	local sc_code = [[Quarks.installed.collect{|q| q.name}.sort]];
+	local sc_code = [[Quarks.installed.asArray.collect{|q| q.name}.sort]];
 	local supercollider_return_code = "Quarks.uninstall(\"%s\");";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
@@ -109,7 +109,7 @@ end
 
 -- Pdef
 function M.play_pdef()
-	local sc_code = [[Pdef.all.keys.sort.asArray]];
+	local sc_code = [[Pdef.all.keys.asArray.sort]];
 	local supercollider_return_code = "Pdef(\'%s\').play;";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
@@ -123,7 +123,7 @@ function M.stop_pdef()
 end
 
 function M.clear_pdef()
-	local sc_code = [[Pdef.all.keys.sort.asArray]];
+	local sc_code = [[Pdef.all.keys.asArray.sort]];
 	local supercollider_return_code = "Pdef(\'%s\').clear;";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
@@ -139,7 +139,7 @@ end
 
 -- Introspect scales
 function M.play_scales()
-	local sc_code = [[Scale.names.sort.asArray;]];
+	local sc_code = [[Scale.names.asArray.sort;]];
 	local supercollider_return_code = "~fzf_scale=\\%s;Pbind(\\scale, Scale.at(~fzf_scale), \\degree, Pseq((0..Scale.at(~fzf_scale).degrees.size-1),1), \\dur, 0.25).play;Scale.at(~fzf_scale).postln;";
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
