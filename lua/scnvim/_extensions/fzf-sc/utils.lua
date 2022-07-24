@@ -56,68 +56,55 @@ function M.fzf_sc_eval(sc_code, callback, prompt, preview, preview_size)
 	assert(sc_code)
 	assert(callback)
 
-	if not require"scnvim/sclang".is_running() then
-		print("[fzf-sc] sclang is not running")
+	require'scnvim'.eval(sc_code,
+	function (returnVal)
+		local scReturnVal = M.split_string_to_array(returnVal)
+
+		-- Callback function
+		local sinkFunction;
+
+		if type(callback) == "string" then
+			sinkFunction = function (val)
+				local formatted = string.format(callback, val)
+				-- print(formatted)
+				require'scnvim'.send(formatted)
+			end;
+		elseif type(callback) == "function" then
+			sinkFunction = function (val)
+				callback(val)
+			end
+		else
+			print("[fzf-sc] callback is wrong type")
+			return
+		end
+
+		-- Preview
+		-- Inspiration: https://github.com/vijaymarupudi/nvim-fzf-commands/blob/master/lua/fzf-commands/bufferpicker.lua
+		local preview_function
+
+		if not prompt then prompt = "fzf-sc: " end
+		-- if not header then header = "" end
+		-- "--header " .. header ..
+		local fzfopts =  "--ansi --prompt " .. prompt .. " "
+		if preview then
+			-- coroutine.wrap(function ()
+			preview_function = action(preview)
+			-- end)
+
+			if not preview_size then preview_size = "10" end
+			fzfopts = fzfopts .. "--preview=" .. preview_function .. " --preview-window bottom:" .. preview_size .. " "
+		end
+
+		coroutine.wrap(function()
+			local result = require'fzf'.fzf(scReturnVal, fzfopts, require"scnvim._extensions.fzf-sc.main".options);
+			if result then
+				-- print(result[1])
+				sinkFunction(result[1])
+			end;
+		end)();
+
 	end
 
-	require'scnvim'.eval(sc_code,
-		function (returnVal)
-			local scReturnVal = M.split_string_to_array(returnVal)
-
-			-- Callback function
-			local sinkFunction;
-
-			if type(callback) == "string" then
-				sinkFunction = function (val)
-					local formatted = string.format(callback, val)
-					-- print(formatted)
-					require'scnvim'.send(formatted)
-				end;
-			elseif type(callback) == "function" then
-				sinkFunction = function (val)
-					callback(val)
-				end
-			else
-				print("[fzf-sc] callback is wrong type")
-				return
-			end
-
-			-- If using nvim-fzf
-			if require"scnvim._extensions.fzf-sc.main".search_plugin == "nvim-fzf" then
-				-- Preview
-				-- Inspiration: https://github.com/vijaymarupudi/nvim-fzf-commands/blob/master/lua/fzf-commands/bufferpicker.lua
-				local preview_function
-
-				if not prompt then prompt = "fzf-sc: " end
-				-- if not header then header = "" end
--- "--header " .. header ..
-				local fzfopts =  "--ansi --prompt " .. prompt .. " "
-				if preview then
-					-- coroutine.wrap(function ()
-					preview_function = action(preview)
-					-- end)
-
-					if not preview_size then preview_size = "10" end
-					fzfopts = fzfopts .. "--preview=" .. preview_function .. " --preview-window bottom:" .. preview_size .. " "
-				end
-
-				coroutine.wrap(function()
-					local result = require'fzf'.fzf(scReturnVal, fzfopts, require"scnvim._extensions.fzf-sc.main".options);
-					if result then
-						-- print(result[1])
-						sinkFunction(result[1])
-					end;
-				end)();
-
-				-- If using fzf.vim
-			elseif require"scnvim._extensions.fzf-sc.main".search_plugin == "fzf.vim" then
-				local specs = {["source"] = scReturnVal, ["sink"] = sinkFunction}
-				vim.fn["fzf#run"](specs)
-			else
-				error("fzf-sc: No fzf plugin defined")
-			end
-
-		end
 	)
 end
 
@@ -150,16 +137,12 @@ function M.definitions()
 		vim.cmd("spl " .. lookup_path)
 	end
 
-	if require"scnvim._extensions.fzf-sc.main".search_plugin == "nvim-fzf" then
-		coroutine.wrap(function()
-			local result = require'fzf'.fzf(help_keys);
-			if result then
-				lookup_func(result[1])
-			end;
-		end)();
-	else
-		error("fzf-sc: Only supported for nvim-fzf")
-	end
+	coroutine.wrap(function()
+		local result = require'fzf'.fzf(help_keys);
+		if result then
+			lookup_func(result[1])
+		end;
+	end)();
 end
 
 return M

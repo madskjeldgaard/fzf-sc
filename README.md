@@ -8,7 +8,7 @@ Fuzzy search basically anything in SuperCollider and execute SuperCollider code 
 
 ## Requirements
 
-- [nvim-fzf](https://github.com/vijaymarupudi/nvim-fzf)(recommended) or [fzf.vim](https://github.com/junegunn/fzf.vim)
+- [nvim-fzf](https://github.com/vijaymarupudi/nvim-fzf)(recommended) 
 - [scnvim](https://github.com/davidgranstrom/scnvim)
 - Nvim >= v0.7
 

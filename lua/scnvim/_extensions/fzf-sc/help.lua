@@ -42,9 +42,17 @@ function M.fzf_sc_help()
 		table.insert(help_keys, tostring(k))
 	end
 
-	local specs = {["source"] = help_keys, ["sink"] = scnvim_help_open}
+	coroutine.wrap(function()
+		local result = require'fzf'.fzf(
+		help_keys,
+		fzfopts,
+		require"scnvim._extensions.fzf-sc.main".options
+		);
 
-	vim.fn["fzf#run"](specs)
+		if result then
+			scnvim_help_open(result[1])
+		end;
+	end)();
 
 end
 
