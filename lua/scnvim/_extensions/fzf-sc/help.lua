@@ -21,6 +21,10 @@ function M.scnvim_help_keys()
 	local help = M.scnvim_unpack_tags_table()
 	local help_keys = {};
 
+	if not help then
+		error("fzf-sc: No help tags found")
+	end
+
 	for k,_ in pairs(help) do
 		table.insert(help_keys, tostring(k))
 	end
