@@ -19,8 +19,8 @@ end
 
 -- SynthDefs
 function M.play_synthdef()
-	local sc_code = [[SynthDescLib.default.synthDescs.keys.asArray.sort]]
-	local supercollider_return_code = "Synth('%s');"
+	local sc_code = [[SynthDescLib.default.synthDescs.keys.asArray.reject {|it| it.asString.beginsWith("syst") }.sort]]
+	local supercollider_return_code = "(instrument:'%s', dur:4).play;"
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
