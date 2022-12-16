@@ -47,6 +47,7 @@ controlNames.do{|ctrl, index|
 These are the arguments for SynthDef: " ++ synthName.asString ++ "\n\n").postln;
 outString.postln;
 }.value();
+"".postln;
 ]]
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
