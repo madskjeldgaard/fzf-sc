@@ -78,14 +78,14 @@ function M.postinfo_controlspecs()
 end
 
 -- Nodeproxy
-function M.stop_nodeproxy()
+function M.stop_ndef()
 	local sc_code = [[Ndef.all['localhost'].monitors.asArray.sort]]
 	local supercollider_return_code = "%s.stop;"
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
 
-function M.play_nodeproxy()
+function M.play_ndef()
 	local sc_code = [[Ndef.all['localhost'].existingProxies.asArray.sort]]
 	local supercollider_return_code = "Ndef('%s').play;"
 
@@ -102,6 +102,28 @@ end
 function M.ndef_gui()
 	local sc_code = [[Ndef.all['localhost'].existingProxies.asArray.sort]]
 	local supercollider_return_code = "Ndef('%s').gui();"
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
+-- ProxySpace
+function M.stop_proxy()
+	local sc_code = [[p.playingProxies.asArray.sort]]
+	local supercollider_return_code = "p['%s'].stop"
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
+function M.play_proxy()
+	local sc_code = [[p.activeProxies.asArray.reject {|it| p[it].isMonitoring }.sort]]
+	local supercollider_return_code = "p['%s'].play"
+
+	utils.fzf_sc_eval(sc_code, supercollider_return_code)
+end
+
+function M.clear_proxy()
+	local sc_code = [[(p.krProxyNames ++ p.arProxyNames).asArray.sort]]
+	local supercollider_return_code = "p['%s'].clear(1)"
 
 	utils.fzf_sc_eval(sc_code, supercollider_return_code)
 end
