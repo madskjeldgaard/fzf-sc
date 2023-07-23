@@ -15,10 +15,6 @@ end
 return require'scnvim'.register_extension {
 	setup = function(ext_config, user_config)
 
-		-- FIXME: This is a dirty hack to allow two or more consecutive FzfLua calls
-		-- When entering a buffer of filetype "fzf", make it modifyable
-		vim.cmd("autocmd FileType fzf set modifiable")
-
 		local default_options = {
 			height = 50,
 			width = 50,
